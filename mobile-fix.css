@@ -1,0 +1,42 @@
+/* モバイル向け強化スタイル */
+@media screen and (max-width: 767px) {
+  /* ヒーローセクションのテキスト改行問題を修正 */
+  .hero-inner h1 {
+    white-space: nowrap !important;
+    font-size: 24px !important;
+  }
+  
+  /* 音楽アイコンを常に表示 */
+  .sound-icon {
+    opacity: 0.8 !important;
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+  }
+  
+  /* モバイルでのアニメーション効果 */
+  .mobile-animated {
+    transform: scale(1.02) !important;
+    transition: transform 0.3s ease !important;
+  }
+  
+  /* タッチ時のアクティブ状態 */
+  .touch-active {
+    transform: scale(1.05) !important;
+  }
+  
+  /* キャラクターアイテムのアニメーション */
+  .character-item {
+    transform: translateY(-3px) !important;
+  }
+  
+  /* 作品画像のアニメーション */
+  .work-image img {
+    transform: scale(1.02) !important;
+  }
+  
+  /* プロフィール画像のアニメーション */
+  .profile-image-container {
+    transform: scale(1.02) !important;
+  }
+}
