@@ -1,0 +1,6 @@
+/* ヒーローテキストの改行問題のみを修正するCSS */
+@media screen and (max-width: 767px) {
+  .hero-inner h1 {
+    white-space: nowrap !important;
+  }
+}
