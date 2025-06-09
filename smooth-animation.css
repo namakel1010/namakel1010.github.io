@@ -1,0 +1,91 @@
+/* スムーズなアニメーション - PC・スマホ共通対応版 */
+
+/* ヒーローセクションのテキスト修正 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* 基本アニメーション設定 */
+.character-item,
+.work-item,
+.profile-image-container {
+  transition: transform 0.4s ease, box-shadow 0.4s ease !important;
+}
+
+.character-image-container,
+.work-image img {
+  transition: transform 0.4s ease, filter 0.4s ease !important;
+}
+
+/* スクロールで表示されたときのアニメーション */
+.character-item.in-view {
+  transform: translateY(-5px) !important;
+}
+
+.character-item.in-view .character-image-container {
+  transform: scale(1.03) !important;
+}
+
+.work-item.in-view {
+  transform: translateY(-3px) !important;
+}
+
+.work-item.in-view .work-image img {
+  transform: scale(1.03) !important;
+  filter: brightness(0.95) !important;
+}
+
+.profile-image-container.in-view {
+  transform: scale(1.03) !important;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+}
+
+/* 音楽アイコン */
+.sound-icon {
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.sound-icon.in-view {
+  opacity: 0.8 !important;
+  visibility: visible !important;
+}
+
+/* ホバー効果の保持（PC用） */
+@media screen and (min-width: 768px) {
+  .character-item:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+  .character-item:hover .character-image-container {
+    transform: scale(1.05) !important;
+  }
+  
+  .work-item:hover .work-image img {
+    transform: scale(1.05) !important;
+    filter: brightness(0.9) !important;
+  }
+  
+  .profile-image-container:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+  }
+  
+  .work-item:hover .sound-icon {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* モバイル向け調整 */
+@media screen and (max-width: 767px) {
+  .sound-icon.in-view {
+    opacity: 1 !important;
+  }
+  
+  /* モバイルでのアニメーション微調整 */
+  .character-item.in-view,
+  .work-item.in-view,
+  .profile-image-container.in-view {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  }
+}
