@@ -1,0 +1,57 @@
+/* スマホ表示の問題を修正するスタイル */
+
+/* ヒーローセクションのテキスト改行問題を修正 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* モバイル向けのスタイル */
+@media screen and (max-width: 767px) {
+  /* 音楽アイコンを常に表示 */
+  .sound-icon {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+    z-index: 100 !important;
+  }
+  
+  /* キャラクターアイテムのアニメーション */
+  .character-item {
+    transform: translateY(-3px) !important;
+  }
+  
+  /* 画像のアニメーション */
+  .character-image-container,
+  .profile-image-container,
+  .work-image img {
+    transform: scale(1.02) !important;
+  }
+  
+  /* タッチ時のアクティブ状態 */
+  .touch-active {
+    transform: scale(1.05) !important;
+  }
+  
+  /* 音楽アイコンのホバー状態を常に表示 */
+  .work-item:hover .sound-icon,
+  .work-item .sound-icon {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* 作品画像のホバー効果を常に表示 */
+  .work-image img {
+    filter: brightness(0.9) !important;
+  }
+  
+  /* ヒーローセクションの調整 */
+  .hero-inner h1 {
+    font-size: 24px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .hero-inner p {
+    font-size: 16px !important;
+  }
+}
