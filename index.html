@@ -125,6 +125,33 @@
     .work-item {
       margin-bottom: 20px !important;
     }
+    /* スマホでもホバーエフェクトを表示 */
+    .sound-icon {
+      opacity: 0.8 !important;
+    }
+    .character-item {
+      transform: translateY(-3px) !important;
+    }
+    .character-image-container {
+      transform: scale(1.02) !important;
+    }
+    .profile-image-container {
+      transform: scale(1.02) !important;
+    }
+    .work-image img {
+      transform: scale(1.02) !important;
+    }
+    /* ヒーローセクションのテキスト改行問題を修正 */
+    .hero-inner {
+      text-align: center !important;
+    }
+    .hero-inner h1 {
+      font-size: 24px !important;
+      margin-bottom: 10px !important;
+    }
+    .hero-inner p {
+      font-size: 16px !important;
+    }
   }
   
   /* Charactersセクションの余白縮小 */
@@ -379,8 +406,9 @@
         playing: false
       };
       
-      // 音楽アイコンのクリックイベント
-      soundIcon.addEventListener('click', function(e) {
+      // 音楽アイコンのクリックイベントとタッチイベント
+      const handlePlayback = function(e) {
+        e.preventDefault();
         e.stopPropagation(); // クリックイベントの伝播を停止
         
         // 現在再生中の全ての音楽を停止
@@ -388,6 +416,8 @@
           if (key != index && audioElements[key].playing) {
             audioElements[key].audio.pause();
             audioElements[key].playing = false;
+            const otherIcon = workItems[key].querySelector('.sound-icon');
+            if (otherIcon) otherIcon.innerHTML = '<i class="fas fa-music"></i>';
           }
         });
         
@@ -401,7 +431,11 @@
           audioElements[index].playing = true;
           soundIcon.innerHTML = '<i class="fas fa-pause"></i>';
         }
-      });
+      };
+      
+      // クリックとタッチの両方に対応
+      soundIcon.addEventListener('click', handlePlayback);
+      soundIcon.addEventListener('touchstart', handlePlayback);
     });
   });
 </script>
@@ -429,7 +463,7 @@
   <section id="hero" class="hero">
     <div class="hero-background"></div>
     <div class="hero-inner">
-      <h1>あなたの毎日に、彩りを。</h1>
+      <h1 style="white-space: nowrap;">あなたの毎日に、彩りを。</h1>
       <p>Add colors to your daily life</p>
     </div>
     <div class="scroll-down-arrow">
