@@ -1,0 +1,77 @@
+/* スクロールアニメーション用スタイル */
+
+/* ヒーローセクションのテキスト改行問題を修正 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* スクロールアニメーション */
+.scroll-animated {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* キャラクターアイテムのアニメーション */
+.character-item.scroll-animated {
+  transform: translateY(-5px) !important;
+  transition: transform 0.5s ease !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+}
+
+.character-item.scroll-animated .character-image-container {
+  transform: scale(1.05) !important;
+  transition: transform 0.5s ease !important;
+}
+
+/* 作品アイテムのアニメーション */
+.work-item.scroll-animated {
+  transform: translateY(-3px) !important;
+  transition: transform 0.5s ease !important;
+}
+
+.work-item.scroll-animated .work-image img {
+  transform: scale(1.05) !important;
+  transition: transform 0.5s ease, filter 0.5s ease !important;
+  filter: brightness(0.9) !important;
+}
+
+/* プロフィール画像のアニメーション */
+.profile-image-container.scroll-animated {
+  transform: scale(1.05) !important;
+  transition: transform 0.5s ease !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+}
+
+/* 音楽アイコンのアニメーション */
+.sound-icon.icon-visible {
+  opacity: 0.8 !important;
+  visibility: visible !important;
+  display: flex !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* フェードインアップアニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0.7;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* モバイル向けの調整 */
+@media screen and (max-width: 767px) {
+  /* 音楽アイコンの表示調整 */
+  .work-item .sound-icon.icon-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+  }
+  
+  /* アニメーションの強化 */
+  .scroll-animated {
+    animation-duration: 0.3s !important;
+  }
+}
