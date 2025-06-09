@@ -1,0 +1,47 @@
+/* 元の状態に戻すスタイル */
+
+/* ヒーローセクションのテキスト修正だけ維持 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* 変な枠と不要なアニメーションを強制削除 */
+.character-item,
+.work-item,
+.profile-image-container,
+.character-image-container,
+.work-image img {
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  filter: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* 音楽アイコンを元の状態に戻す */
+.sound-icon {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* PCでのホバー時のみ表示 */
+.work-item:hover .sound-icon {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* クラス名に関係なく、全ての要素から枠を削除 */
+[class*="item"],
+[class*="container"],
+[class*="image"],
+img {
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  border: none !important;
+  outline: none !important;
+}
