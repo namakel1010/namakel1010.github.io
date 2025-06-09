@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Namakel</title>
+
+<!-- FONTS & ICONS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* セクション間の余白を大幅に縮小と統一 */
+  .section-wrapper { padding: 0.5rem 0 !important; }
+  .connecting-line { height: 80px !important; margin: 0 auto 0.5rem !important; }
+  .section-title { margin: 0.5rem 0 !important; }
+  
+  /* トップページとAbout、AboutとWorksの間の余白を統一 */
+  #hero { margin-bottom: 0 !important; }
+  .about-section { padding-top: 0.5rem !important; padding-bottom: 0 !important; }
+  .works-section-wrapper { padding-top: 0 !important; }
+  
+  /* Aboutセクションのプロフィール画像を円形にし、動きを追加 */
+  .profile-image-container {
+    transition: transform 0.5s ease, box-shadow 0.3s ease !important;
+    border-radius: 50% !important; /* 円形に変更 */
+    overflow: hidden !important;
+    width: 200px !important;
+    height: 200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .profile-image-container:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+  }
+  
+  .profile-image-container img {
+    transition: transform 0.5s ease !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  .profile-image-container:hover img {
+    transform: scale(1.05) !important;
+  }
+  
+  /* Worksセクションの余白縮小とレイアウト改善 - 2×2グリッド */
+  .works-section-wrapper { padding: 0.5rem 0 !important; text-align: center !important; }
+  .works-carousel {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    padding: 0 10px !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .work-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 10px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    position: relative !important;
+  }
+  
+  /* 音楽再生アイコン - 中央配置 */
+  .sound-icon {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    color: white !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+    z-index: 10 !important;
+    font-size: 20px !important;
+  }
+  
+  .work-image:hover .sound-icon {
+    opacity: 1 !important;
+  }
+  
+  .sound-icon:hover {
+    transform: translate(-50%, -50%) scale(1.1) !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
+  }
+  
+  /* ホバーエフェクト */
+  .work-item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+  }
+  
+  .work-image {
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    position: relative !important;
+  }
+  
+  .work-image img {
+    transition: transform 0.5s ease !important;
+  }
+  
+  .work-item:hover .work-image img {
+    transform: scale(1.05) !important;
+  }
+  
+  /* モバイル用の調整 */
+  @media screen and (max-width: 767px) {
+    .works-carousel {
+      display: block !important;
+    }
+    .work-item {
+      margin-bottom: 20px !important;
+    }
+  }
+  
+  /* Charactersセクションの余白縮小 */
+  .characters-section { padding: 0.5rem 24px !important; }
+  .character-item { 
+    margin-bottom: 1.5rem !important; 
+    transition: transform 0.3s ease !important;
+  }
+  
+  .character-item:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+  .character-image-container {
+    transition: transform 0.3s ease !important;
+  }
+  
+  .character-item:hover .character-image-container {
+    transform: scale(1.05) !important;
+  }
+  
+  /* Awardsセクションの余白縮小とテキスト位置調整 */
+  .awards-section {
+    padding: 0.5rem 24px !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+  }
+  
+  .awards-container {
+    width: 100% !important;
+  }
+  
+  .awards-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .awards-section {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    
+    .awards-container {
+      margin-left: -40px !important; /* さらに10文字分右に調整 */
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .awards-section {
+      padding: 0.5rem 24px !important;
+    }
+    
+    .awards-container {
+      margin-left: 0 !important;
+    }
+  }
+  
+  .award-item {
+    transition: transform 0.3s ease !important;
+    position: relative !important;
+    margin-bottom: 1.5rem !important;
+    text-align: left !important;
+  }
+  
+  .award-item:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+  /* Contactセクションの余白縮小 */
+  .contact-section { padding: 0.5rem 24px 1rem !important; }
+  .social-icons-container { margin: 1rem 0 !important; }
+  
+  /* スクロールアニメーション用クラス */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* セクションタイトルのアニメーション - 中央揃え */
+  .section-title {
+    position: relative !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  
+  .section-title::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 2px !important;
+    background-color: var(--theme-color) !important;
+    transform: translateX(-50%) !important;
+    transition: width 0.6s ease !important;
+  }
+  
+  .section-title.active::after {
+    width: 120px !important;
+  }
+  
+  /* ホームに戻るアイコン */
+  .back-to-top {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
+    background-color: var(--theme-color) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    font-size: 20px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+    transform: translateY(10px) !important;
+    z-index: 1000 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+  }
+  
+  .back-to-top.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+  }
+  
+  .back-to-top:hover {
+    transform: translateY(-5px) !important;
+  }
+</style>
+
+<!-- アニメーション用JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // スクロールアニメーションの設定
+    const fadeElements = document.querySelectorAll('.work-item, .character-item, .award-item, .section-title, .profile-image-container');
+    
+    // 全ての要素にfade-inクラスを追加
+    fadeElements.forEach(el => {
+      el.classList.add('fade-in');
+    });
+    
+    // スクロール時の処理
+    function checkFade() {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        if (rect.top < windowHeight * 0.9) {
+          el.classList.add('active');
+        }
+      });
+      
+      // ホームに戻るボタンの表示制御
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    }
+    
+    // 初期表示時にもチェック
+    setTimeout(checkFade, 100);
+    
+    // スクロール時にアニメーションを発火
+    window.addEventListener('scroll', checkFade);
+    
+    // ホームに戻るボタンのクリックイベント
+    document.querySelector('.back-to-top').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 音楽再生機能の設定
+    const workItems = document.querySelectorAll('.work-item');
+    const audioElements = {};
+    
+    // 各作品に音楽アイコンと音楽ファイルを追加
+    workItems.forEach((item, index) => {
+      // 画像コンテナを取得
+      const imageContainer = item.querySelector('.work-image');
+      
+      // 音楽アイコンを追加
+      const soundIcon = document.createElement('div');
+      soundIcon.className = 'sound-icon';
+      soundIcon.innerHTML = '<i class="fas fa-music"></i>';
+      
+      // 画像コンテナに音楽アイコンを追加
+      imageContainer.appendChild(soundIcon);
+      
+      // 音楽ファイルを設定
+      const audio = new Audio();
+      audio.loop = true;
+      audio.volume = 0.5;
+      
+      // 作品のタイトルを取得
+      const workTitle = item.querySelector('.work-title').textContent.trim();
+      
+      // 作品に合わせて音楽ファイルを設定
+      if (workTitle.includes('まいっ花')) {
+        // まいっ花の音楽
+        audio.src = 'assets/audio/music1.mp3';
+        console.log('まいっ花に音楽を設定: ' + audio.src);
+      } 
+      else if (workTitle.includes('オロちょこ')) {
+        // オロちょこの音楽
+        audio.src = 'assets/audio/music2.mp3';
+        console.log('オロちょこに音楽を設定: ' + audio.src);
+      }
+      else if (workTitle.includes('BloomUp')) {
+        // BloomUpの音楽
+        audio.src = 'assets/audio/music3.mp3';
+        console.log('BloomUpに音楽を設定: ' + audio.src);
+      }
+      else if (workTitle.includes('BiteTheLuck')) {
+        // BiteTheLuckの音楽
+        audio.src = 'assets/audio/music4.mp3';
+        console.log('BiteTheLuckに音楽を設定: ' + audio.src);
+      }
+      else {
+        // デフォルトの音楽
+        audio.src = 'assets/audio/music' + ((index % 4) + 1) + '.mp3';
+        console.log('作品 ' + index + ' にデフォルト音楽を設定: ' + audio.src);
+      }
+      
+      // 音楽ファイルが見つからない場合のフォールバック
+      audio.onerror = function() {
+        console.log('音楽ファイルが見つかりませんでした：' + audio.src);
+        audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // フォールバック用の音楽
+      };
+      
+      audioElements[index] = {
+        audio: audio,
+        playing: false
+      };
+      
+      // 音楽アイコンのクリックイベント
+      soundIcon.addEventListener('click', function(e) {
+        e.stopPropagation(); // クリックイベントの伝播を停止
+        
+        // 現在再生中の全ての音楽を停止
+        Object.keys(audioElements).forEach(key => {
+          if (key != index && audioElements[key].playing) {
+            audioElements[key].audio.pause();
+            audioElements[key].playing = false;
+          }
+        });
+        
+        // クリックした作品の音楽を再生/停止
+        if (audioElements[index].playing) {
+          audioElements[index].audio.pause();
+          audioElements[index].playing = false;
+          soundIcon.innerHTML = '<i class="fas fa-music"></i>';
+        } else {
+          audioElements[index].audio.play().catch(e => console.log('音楽の再生に失敗しました:', e));
+          audioElements[index].playing = true;
+          soundIcon.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+      });
+    });
+  });
+</script>
+</head>
+<body>
+
+<header>
+  <a href="#hero" class="brand">Namakel</a>
+  <div class="burger"><span></span><span></span></div>
+</header>
+
+<nav class="nav-menu">
+  <ul>
+    <li><a href="#hero">HOME</a></li>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#works">WORKS</a></li>
+    <li><a href="#characters">CHARACTERS</a></li>
+    <li><a href="#awards">AWARDS</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<main>
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-inner">
+      <h1>あなたの毎日に、彩りを。</h1>
+      <p>Add colors to your daily life</p>
+    </div>
+    <div class="scroll-down-arrow">
+      <a href="#about"><i class="fas fa-chevron-down"></i></a>
+    </div>
+  </section>
+  
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about-section">
+    <div class="connecting-line"></div>
+    <h2 class="section-title">About</h2>
+    <div class="profile-image-container">
+      <img src="assets/img/profile-fixed.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div class="profile-name-title">
+      <div class="name">Namakel</div>
+      <div class="title">ILLUSTRATOR / CHARACTER DESIGNER</div>
+    </div>
+    <div class="profile-text">
+      <div class="profile-text-jp">
+        <p>AI技術を創造性の源泉として、<br>花や石の持つ言葉や意味を現代に再解釈し、<br>コンテンツとして提供しています。</p>
+        <p>Suno AIによる楽曲制作、<br>AIアート、キャラクター創造など、<br>その表現は多岐にわたります。</p>
+        <p>技術の先進性と人間的な温かみを両立させ、<br>あなたの日常に寄り添う<br>新しいクリエイティブ体験を追求しています。</p>
+      </div>
+      <div class="en-text">
+        <p>Using AI technology as a source of creativity, I reinterpret the language and meaning of flowers and stones for the modern age.</p>
+        <p>My expressions range from music creation with Suno AI to AI art and character design.</p>
+        <p>I pursue new creative experiences that balance technological innovation with human warmth.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- WORKS SECTION -->
+  <section id="works" class="works-section-wrapper">
+    <div class="connecting-line"></div>
+    <h2 class="section-title">Works</h2>
+    <div class="works-carousel">
+      <div class="work-item">
+        <div class="work-image">
+          <img src="assets/img/works-luna.JPG" alt="Maiikka">
+        </div>
+        <div class="work-content">
+          <h3 class="work-title">#まいっ花</h3>
+          <p class="work-description">日々の誕生花とその花言葉にのせて、<br>あなたの背中をそっと押す<br>「ゆる励ましコメント」を発信中。</p>
+          <a href="https://x.com/namakel1010/status/1924918130939457562?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank" class="work-link">View Project</a>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-image">
+          <img src="assets/img/works-oroti.JPG" alt="Oro">
+        </div>
+        <div class="work-content">
+          <h3 class="work-title">#オロちょこ</h3>
+          <p class="work-description">今日のちょこっと開運アイテム。<br>小さな幸運を呼び込むヒントを<br>毎日お届けしてます。</p>
+          <a href="https://x.com/namakel1010/status/1924207466935701555?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank" class="work-link">View Project</a>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-image">
+          <img src="assets/img/works-oto.JPG" alt="BloomUp">
+        </div>
+        <div class="work-content">
+          <h3 class="work-title">#BloomUp!</h3>
+          <p class="work-description">花の物語を、音楽にのせて。<br>聴けば、ちょっと元気になる<br>オリジナル楽曲を制作しています。</p>
+          <a href="https://x.com/namakel1010/status/1929282063686877596?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank" class="work-link">View Project</a>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-image">
+          <img src="assets/img/works-jyanome.JPG" alt="BitHeLuck">
+        </div>
+        <div class="work-content">
+          <h3 class="work-title">#BiteTheLuck</h3>
+          <p class="work-description">誕生石が持つ意味と共に、<br>石のパワーを歌詞に込めた<br>幸運ソングをあなたの力に。</p>
+          <a href="https://x.com/namakel1010/status/1930002832666833038?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank" class="work-link">View Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CHARACTERS SECTION -->
+  <section id="characters" class="characters-section">
+    <div class="connecting-line"></div>
+    <h2 class="section-title">Characters</h2>
+    <div class="character-item fade-in-on-scroll stagger">
+      <div class="character-image-container">
+        <img src="assets/img/icon-luna.PNG" alt="Luna">
+      </div>
+      <div class="character-text-content">
+        <h3 class="character-name">ルナ</h3>
+        <p class="character-description">そっと心に寄り添い<br>あなたの内なる輝きを引き出す<br>＃まいっ花 黒いウサギのルナ。<br>心の花をゆっくりと咲かせましょう。</p>
+      </div>
+    </div>
+    <div class="character-item fade-in-on-scroll stagger">
+      <div class="character-image-container">
+        <img src="assets/img/icon-oroti.PNG" alt="Orochi">
+      </div>
+      <div class="character-text-content">
+        <h3 class="character-name">オロチ</h3>
+        <p class="character-description">運命を切り拓き、幸運への扉を開く<br>#オ口ちょこ 白いヘビのオロチ。<br>あなたの日常にちょっとした変化と<br>ちっちゃな幸運を呼び込みます。</p>
+      </div>
+    </div>
+    <div class="character-item fade-in-on-scroll stagger">
+      <div class="character-image-container">
+        <img src="assets/img/icon-oto.JPG" alt="Oto-chan">
+      </div>
+      <div class="character-text-content">
+        <h3 class="character-name">オトちゃん</h3>
+        <p class="character-description">心に花を咲かせる<br>#BloomUp オトちゃん。<br>あなたの日常にそっと彩りを添え<br>穏やかな希望の調べを届けます。</p>
+      </div>
+    </div>
+    <div class="character-item fade-in-on-scroll stagger">
+      <div class="character-image-container">
+        <img src="assets/img/icon-jyanome.PNG" alt="Janome-chan">
+      </div>
+      <div class="character-text-content">
+        <h3 class="character-name">ジャノメちゃん</h3>
+        <p class="character-description">運命を切り拓き、幸運を掴み取る<br>#BiteTheLuck ジャノメちゃん。<br>あなたの内に秘めた力を呼び覚まし<br>運を掴むための一歩を後押しします。</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- AWARDS SECTION -->
+  <section id="awards">
+    <div class="connecting-line"></div>
+    <h2 class="section-title">Awards</h2>
+    <div class="awards-section">
+      <div class="awards-container">
+        <ul class="awards-list">
+          <li class="award-item">
+            <div class="award-date">2025.01</div>
+            <p class="award-description"><a class="embedded-link" href="https://x.com/namakel1010/status/1875823501824995800?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank">CoolGirl冬コンペ2024 AI賞受賞</a></p>
+          </li>
+          <li class="award-item">
+            <div class="award-date">2024.08</div>
+            <p class="award-description"><a class="embedded-link" href="https://x.com/namakel1010/status/1829866216561000536?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank">NinjaDAO夏のファンアート 新人賞受賞</a></p>
+          </li>
+          <li class="award-item">
+            <div class="award-date">2024.08</div>
+            <p class="award-description"><a class="embedded-link" href="https://x.com/namakel1010/status/1827486282018386200?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank">TMA夏のファンアートコンテストAI賞受賞</a></p>
+          </li>
+          <li class="award-item">
+            <div class="award-date">2024.01</div>
+            <p class="award-description"><a class="embedded-link" href="https://x.com/namakel1010/status/1744352009367527428?s=46&t=hsMI4NK9j7vwoJF-POfGkA" target="_blank">TMA冬のイラストコンテスト AI賞受賞</a></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="contact-section">
+    <h2 class="section-title">Contact</h2>
+    <div class="social-icons-container">
+      <a href="https://x.com/namakel1010" target="_blank" class="social-icon-link"><i class="fa-brands fa-x-twitter social-icon"></i><span class="social-text">X</span></a>
+      <a href="https://suno.com/@namakel" target="_blank" class="social-icon-link"><i class="fas fa-music social-icon"></i><span class="social-text">Suno</span></a>
+      <a href="https://www.instagram.com/namakel1010?igsh=MTdsaWEzbG42ZHJjbg%3D%3D&utm_source=qr" target="_blank" class="social-icon-link"><i class="fab fa-instagram social-icon"></i><span class="social-text">Instagram</span></a>
+      <a href="#" class="social-icon-link"><i class="fab fa-youtube social-icon"></i><span class="social-text">YouTube</span></a>
+      <a href="#" class="social-icon-link"><i class="fab fa-tiktok social-icon"></i><span class="social-text">TikTok</span></a>
+    </div>
+  </section>
+</main>
+
+<div class="scroll-to-top" id="scrollToTopBtn"><i class="fas fa-chevron-up"></i></div>
+  <!-- ホームに戻るアイコン -->
+  <a href="#" class="back-to-top"><i class="fas fa-chevron-up"></i></a>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

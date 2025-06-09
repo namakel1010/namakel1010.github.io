@@ -1,0 +1,854 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px;
+  background: #fff;
+  color: #333;
+  overflow-x: hidden;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+:root {
+  --header-h: 72px;
+  --brand-size: 1.15rem;
+  --brand-weight: 400;
+  --brand-ls: 0.04em;
+  --copy-jp-size: 1.8rem;
+  --copy-jp-weight: 300;
+  --copy-jp-ls: 0.14em;
+  --copy-en-size: 0.75rem;
+  --copy-en-weight: 300;
+  --copy-en-ls: 0.08em;
+  --theme-color: #87ceeb;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 1000;
+  transition: box-shadow .3s;
+}
+
+header.scrolled {
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.brand {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--brand-size);
+  font-weight: var(--brand-weight);
+  letter-spacing: var(--brand-ls);
+  color: #000;
+  text-decoration: none;
+}
+
+.burger {
+  width: 32px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.burger span {
+  width: 100%;
+  height: 2px;
+  background: #000;
+  border-radius: 1px;
+  transition: transform .3s;
+}
+
+.burger.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.burger.active span:nth-child(2) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(255,255,255,.98);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.77,0,.175,1);
+  z-index: 1100;
+}
+
+.nav-menu.active {
+  transform: translateY(0);
+}
+
+.nav-menu ul {
+  list-style: none;
+  text-align: center;
+}
+
+.nav-menu li {
+  margin: 30px 0;
+}
+
+.nav-menu a {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: .1em;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+  padding: 5px 0;
+}
+
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--theme-color);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform .3s;
+}
+
+.nav-menu a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s, transform .8s;
+}
+
+.fade-in-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-on-scroll.stagger:nth-child(2) {
+  transition-delay: .1s;
+}
+
+.fade-in-on-scroll.stagger:nth-child(3) {
+  transition-delay: .2s;
+}
+
+.fade-in-on-scroll.stagger:nth-child(4) {
+  transition-delay: .3s;
+}
+
+.fade-in-on-scroll.stagger:nth-child(5) {
+  transition-delay: .4s;
+}
+
+.connecting-line {
+  width: 1.5px;
+  height: 40px; /* 長さを短くしつつもグラデーションが見えるように */
+  margin: 0 auto 1rem; /* 下の余白を縮小 */
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #aaddee, var(--theme-color));
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: var(--theme-color);
+  letter-spacing: .1em;
+  margin: 1rem 0; /* 上下の余白を半分に縮小 */
+  text-align: center;
+}
+
+/* ヒーローセクション */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/hero-image.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.hero-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.hero-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-55%);
+  width: 90%;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,.7);
+  z-index: 2;
+}
+
+.hero-inner h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: var(--copy-jp-size);
+  font-weight: var(--copy-jp-weight);
+  letter-spacing: var(--copy-jp-ls);
+  line-height: 1.45;
+  margin-bottom: 7px;
+}
+
+.hero-inner p {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--copy-en-size);
+  font-weight: var(--copy-en-weight);
+  letter-spacing: var(--copy-en-ls);
+}
+
+.scroll-down-arrow {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.scroll-down-arrow a {
+  color: #fff;
+  font-size: 24px;
+  display: block;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-15px); }
+  60% { transform: translateY(-7px); }
+}
+
+/* Aboutセクション */
+.about-section {
+  padding: 8rem 24px 8rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.profile-image-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #f0f8ff;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.profile-image-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  max-width: 100%;
+}
+
+.profile-name-title {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+}
+
+.profile-name-title .name {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.profile-name-title .title {
+  font-family: 'Inter', sans-serif;
+  font-size: .7rem;
+  letter-spacing: .1em;
+  color: #555;
+  margin-top: 4px;
+}
+
+.profile-text {
+  color: #555;
+  text-align: left;
+}
+
+.profile-text p {
+  line-height: 2.2;
+  margin-bottom: 1.5em;
+}
+
+.profile-text-jp {
+  margin-bottom: 2em;
+}
+
+.profile-text-jp p {
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+.profile-text .en-text {
+  font-family: 'Inter', sans-serif;
+  font-size: .8rem;
+  line-height: 1.8;
+  color: #888;
+  margin-top: 1em;
+}
+
+/* 重要: 改行タグを表示するための設定 */
+.profile-text br {
+  display: block;
+}
+
+/* Worksセクション - 余白縮小 */
+.works-section-wrapper {
+  padding: 2rem 0 2rem; /* 上下の余白を大幅に縮小 */
+}
+
+.works-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-overflow-container {
+  overflow: hidden;
+  cursor: grab;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.carousel-overflow-container:active {
+  cursor: grabbing;
+}
+
+.works-carousel {
+  display: flex;
+  transition: transform .3s ease;
+  width: 100%;
+  touch-action: pan-y;
+  position: relative;
+}
+
+.work-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  text-align: left;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.work-image {
+  width: 100%;
+  position: relative;
+  padding-top: 66.67%; /* 2/3のアスペクト比 */
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.work-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 画像をトリミングして表示 */
+  object-position: center; /* 画像を中央に配置 */
+}
+
+/* すべての作品画像を統一表示 */
+.work-image img {
+  background-color: white;
+  padding: 10px;
+}
+
+/* ジャノメちゃんの画像が顔切れしないように調整 */
+.work-item:nth-child(4) .work-image img {
+  object-position: center 30%; /* 顔が見えるように上部を表示 */
+}
+
+.work-content {
+  padding: 1.5rem 24px 0;
+}
+
+.work-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.work-description {
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+/* 重要: 改行タグを表示するための設定 */
+.work-description br {
+  display: block;
+}
+
+.work-link {
+  font-family: 'Inter', sans-serif;
+  color: var(--theme-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--theme-color);
+  padding-bottom: 2px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 100;
+  top: calc(33.335% - 15px); /* 画像の高さの中央に配置 */
+  display: none; /* デフォルトで非表示 */
+}
+
+.carousel-arrow:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.7));
+  transform: translate(-50%, -50%);
+}
+
+.carousel-arrow.prev {
+  left: 24px;
+}
+
+.carousel-arrow.prev:before {
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-arrow.next {
+  right: 24px;
+}
+
+.carousel-arrow.next:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+@keyframes horizontal-prev {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(0) rotate(-135deg); }
+  40% { transform: translateX(-6px) rotate(-135deg); }
+  60% { transform: translateX(-3px) rotate(-135deg); }
+}
+
+@keyframes horizontal-next {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(0) rotate(45deg); }
+  40% { transform: translateX(6px) rotate(45deg); }
+  60% { transform: translateX(3px) rotate(45deg); }
+}
+
+/* Charactersセクション - 余白縮小 */
+.characters-section {
+  padding: 2rem 24px 2rem; /* 上下の余白を大幅に縮小 */
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.character-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.character-image-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f0f8ff;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.character-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.character-text-content {
+  max-width: 320px;
+  width: 100%;
+}
+
+.character-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.character-description {
+  line-height: 2;
+  color: #555;
+  text-align: left;
+}
+
+/* Awardsセクション - 余白縮小 */
+.awards-section {
+  padding: 2rem 24px 2rem; /* 上下の余白を大幅に縮小 */
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.awards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.award-item {
+  margin-bottom: 1.8rem;
+}
+
+.award-date {
+  font-family: 'Inter', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #ccc;
+  margin-bottom: .5rem;
+}
+
+.award-description {
+  line-height: 1.8;
+  color: #555;
+}
+
+.award-description a.embedded-link {
+  color: var(--theme-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--theme-color);
+  padding-bottom: 2px;
+}
+
+.award-description a.embedded-link:hover {
+  border-bottom-color: transparent;
+}
+
+/* Contactセクション - 余白縮小 */
+.contact-section {
+  background: #f0f8ff;
+  padding: 2rem 24px 3rem; /* 上下の余白を大幅に縮小 */
+  text-align: center;
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0 4rem;
+}
+
+.social-icon-link {
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform .3s, color .3s;
+}
+
+.social-icon-link:hover {
+  color: var(--theme-color);
+  transform: translateY(-5px);
+}
+
+.social-icon {
+  font-size: 2.3rem;
+}
+
+.social-text {
+  font-family: 'Inter', sans-serif;
+  font-size: .7rem;
+  margin-top: .5rem;
+}
+
+/* Worksセクションのスタイル - 余白縮小版 */
+.works-section-wrapper {
+  padding: 1rem 0; /* 上下のパディングを縮小 */
+}
+
+.section-title {
+  margin-bottom: 1rem; /* タイトル下の余白を縮小 */
+}
+
+.works-carousel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* 作品間のギャップを縮小 */
+  justify-content: flex-start; /* 左寄せに変更し、センターラインからの位置を調整 */
+  padding: 0 10px; /* 左右に少しパディングを追加 */
+  max-width: 1200px; /* 最大幅を設定 */
+  margin: 0 auto; /* 中央揃え */
+}
+
+.work-item {
+  flex: 1 1 300px;
+  max-width: 500px;
+  margin-bottom: 15px; /* 下マージンを縮小 */
+}
+
+.work-image {
+  position: relative;
+  width: 100%;
+  padding-top: 66.67%; /* 3:2のアスペクト比 */
+  overflow: hidden;
+  margin-bottom: 0.5rem; /* 画像とテキストの間の余白を縮小 */
+}
+
+.work-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-content {
+  padding: 0.5rem 0; /* コンテンツのパディングを縮小 */
+}
+
+.work-title {
+  margin-bottom: 0.5rem; /* タイトル下の余白を縮小 */
+}
+
+.work-description {
+  margin-bottom: 0.5rem; /* 説明文下の余白を縮小 */
+  line-height: 1.4; /* 行間を少し詰める */
+}
+
+/* 矢印ボタンは非表示 */
+.carousel-arrow {
+  display: none;
+}
+
+/* モバイル用調整 */
+@media screen and (max-width: 767px) {
+  .works-carousel {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .work-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px; /* モバイルでの作品間の余白を縮小 */
+  }
+  
+  /* セクションの共通スタイル - 余白最小化 */
+  .section-wrapper {
+    padding: 0.5rem 0; /* セクション間の余白を最小化 */
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* コンテンツの最大幅を調整 */
+  .about-section,
+  .characters-section,
+  .awards-section {
+    max-width: 900px;
+  }
+  
+  /* PCでは矢印を非表示 */
+  .carousel-arrow {
+    display: none !important;
+  }
+
+  /* セクションの余白を調整 */
+  .about-section,
+  .characters-section,
+  .awards-section,
+  .contact-section {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  /* 作品カルーセルの調整 */
+  .works-section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .work-content {
+    padding: 2rem 48px 0;
+  }
+
+  /* プロフィールセクションのレイアウト調整 */
+  .profile-text {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* キャラクターセクションのレイアウト調整 */
+  .character-item {
+    flex-direction: row;
+    justify-content: center;
+    gap: 48px;
+    max-width: 800px;
+    margin: 0 auto 5rem;
+  }
+
+  .character-image-container {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 0;
+  }
+
+  .character-text-content {
+    max-width: 500px;
+  }
+
+  /* ヒーローセクションの調整 */
+  .hero-inner h1 {
+    font-size: calc(var(--copy-jp-size) * 1.5);
+  }
+
+  .hero-inner p {
+    font-size: calc(var(--copy-en-size) * 1.2);
+  }
+}
+
+/* 大画面向けの追加調整 */
+@media screen and (min-width: 1200px) {
+  .about-section,
+  .characters-section,
+  .awards-section {
+    max-width: 1100px;
+  }
+
+  /* ソーシャルアイコンの間隔調整 */
+  .social-icons-container {
+    gap: 4rem;
+  }
+  
+  /* PC表示時のカルーセル矢印を非表示 */
+  .carousel-arrow {
+    display: none;
+  }
+  
+  /* PC表示時のワークスセクションのレイアウト */
+  .works-section {
+    overflow: visible;
+  }
+  
+  .carousel-overflow-container {
+    overflow: visible;
+  }
+  
+  .works-carousel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    transform: none !important;
+  }
+  
+  .work-item {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  background-color: var(--theme-color);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top i {
+  font-size: 14px;
+}
