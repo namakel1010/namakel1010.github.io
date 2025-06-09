@@ -1,0 +1,60 @@
+/* スマホ専用修正スタイル */
+
+/* スマホ向けのスタイル */
+@media screen and (max-width: 767px) {
+  /* ヒーローセクションのテキスト修正 */
+  .hero-inner h1 {
+    white-space: nowrap !important;
+  }
+  
+  /* 変な枠と不要なアニメーションを強制削除 */
+  .character-item,
+  .work-item,
+  .profile-image-container,
+  .character-image-container,
+  .work-image img {
+    box-shadow: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    filter: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* クラス名に関係なく、全ての要素から枠を削除 */
+  [class*="item"],
+  [class*="container"],
+  [class*="image"],
+  img {
+    box-shadow: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* in-viewクラスの効果を無効化 */
+  .in-view,
+  .scroll-animated,
+  .touch-active,
+  .preserve-animation {
+    box-shadow: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  /* 音楽アイコンは初期状態で非表示 */
+  .sound-icon {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  
+  /* タップされた要素の音楽アイコンは表示 */
+  .work-item.tapped .sound-icon {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
