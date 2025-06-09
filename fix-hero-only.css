@@ -1,6 +1,22 @@
-/* ヒーローテキストの改行問題のみを修正するCSS */
+/* ヒーローテキストの改行問題を修正するCSS */
+
+/* すべてのデバイスで適用 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* スマホ向けにより強力な修正 */
 @media screen and (max-width: 767px) {
   .hero-inner h1 {
     white-space: nowrap !important;
+    display: inline-block !important;
+    width: auto !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  
+  .hero-inner {
+    text-align: center !important;
+    width: 100% !important;
   }
 }
