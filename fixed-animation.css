@@ -1,0 +1,37 @@
+/* シンプルなスタイル - 問題修正版 */
+
+/* ヒーローセクションのテキスト修正 */
+.hero-inner h1 {
+  white-space: nowrap !important;
+}
+
+/* 変な枠と不要なアニメーションを削除 */
+.character-item,
+.work-item,
+.profile-image-container {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.character-image-container,
+.work-image img,
+.profile-image-container {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* 元々のホバー効果を保持（PC用） */
+@media screen and (min-width: 768px) {
+  .work-item:hover .sound-icon {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* モバイル向け音楽アイコン表示 */
+@media screen and (max-width: 767px) {
+  .sound-icon {
+    opacity: 0.8 !important;
+    visibility: visible !important;
+  }
+}
